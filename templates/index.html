@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold mb-8 text-center text-gray-800">Pizza Management System</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-700">Toppings</h2>
+                <div id="toppings-list" class="mb-4 space-y-2"></div>
+                <form id="add-topping-form" class="mt-4">
+                    <div class="flex">
+                        <input type="text" id="topping-name" placeholder="New topping name" class="flex-grow p-2 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600 transition duration-200">
+                            <i class="fas fa-plus mr-2"></i>Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-700">Pizzas</h2>
+                <div id="pizzas-list" class="mb-4 space-y-2"></div>
+                <form id="add-pizza-form" class="mt-4">
+                    <input type="text" id="pizza-name" placeholder="New pizza name" class="w-full p-2 border border-gray-300 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <div id="pizza-toppings" class="mb-2 grid grid-cols-2 gap-2"></div>
+                    <button type="submit" class="w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">
+                        <i class="fas fa-pizza-slice mr-2"></i>Add Pizza
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-pizza-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Edit Pizza</h3>
+                <form id="edit-pizza-form" class="mt-2">
+                    <input type="hidden" id="edit-pizza-id">
+                    <input type="text" id="edit-pizza-name" class="w-full p-2 border border-gray-300 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <div id="edit-pizza-toppings" class="mb-2 grid grid-cols-2 gap-2 text-left"></div>
+                    <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200 mt-2">
+                        Update Pizza
+                    </button>
+                </form>
+                <button id="close-modal" class="mt-2 px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
