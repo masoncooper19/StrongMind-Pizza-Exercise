@@ -49,15 +49,22 @@ function fetchPizzas() {
                     <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
                         <span>${pizza.name} (${pizza.toppings.map(t => t.name).join(', ')})</span>
                         <div>
-                            <button onclick="editPizza(${pizza.id}, '${pizza.name}', ${JSON.stringify(pizza.toppings)})" class="text-blue-500 hover:text-blue-700 mr-2">
+                            <button class="edit-pizza-btn text-blue-500 hover:text-blue-700 mr-2">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button onclick="deletePizza(${pizza.id})" class="text-red-500 hover:text-red-700">
+                            <button class="delete-pizza-btn text-red-500 hover:text-red-700">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
                     </div>
                 `);
+                
+                const editBtn = pizzaElement.querySelector('.edit-pizza-btn');
+                editBtn.addEventListener('click', () => editPizza(pizza.id, pizza.name, pizza.toppings));
+                
+                const deleteBtn = pizzaElement.querySelector('.delete-pizza-btn');
+                deleteBtn.addEventListener('click', () => deletePizza(pizza.id));
+                
                 pizzasList.appendChild(pizzaElement);
                 animateElement(pizzaElement);
             });

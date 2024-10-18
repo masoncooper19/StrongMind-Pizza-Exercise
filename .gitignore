@@ -3,7 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment
+# Virtual Environment
+.env
 venv/
 ENV/
 
@@ -25,6 +26,7 @@ instance/
 # OS
 .DS_Store
 Thumbs.db
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
