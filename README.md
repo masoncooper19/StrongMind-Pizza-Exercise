@@ -58,27 +58,28 @@ The application should now be running at `http://localhost:5000`.
 
 ## Deployment
 
-This application is configured for deployment to AWS Elastic Beanstalk. To deploy:
+This application is configured for deployment to Google Cloud Run. To deploy:
 
-1. Install the EB CLI:
-   ```
-   pip install awsebcli
-   ```
+1. Install the Google Cloud SDK by following the instructions at https://cloud.google.com/sdk/docs/install
 
-2. Initialize your EB application:
+2. Initialize the Google Cloud SDK:
    ```
-   eb init -p python-3.8 StrongMind-Pizza-Exercise --region us-west-2
+   gcloud init
    ```
 
-3. Create an environment and deploy:
+3. Enable the necessary APIs:
    ```
-   eb create StrongMind-Pizza-Exercise-env
+   gcloud services enable run.googleapis.com
    ```
 
-4. Open the deployed application:
+4. Build and deploy the application:
    ```
-   eb open
+   gcloud run deploy --source . --platform managed
    ```
+
+5. Follow the prompts to select your project, region, and service name.
+
+6. Once deployed, Google Cloud Run will provide a URL where your application is accessible.
 
 ## Testing
 

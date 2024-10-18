@@ -1,9 +1,11 @@
+// Function to create HTML elements from string
 function createElementFromHTML(htmlString) {
     var div = document.createElement('div');
     div.innerHTML = htmlString.trim();
     return div.firstChild;
 }
 
+// Function to animate element appearance
 function animateElement(element) {
     element.classList.add('opacity-0', 'translate-y-4', 'transition-all', 'duration-300', 'ease-out');
     setTimeout(() => {
@@ -11,6 +13,7 @@ function animateElement(element) {
     }, 50);
 }
 
+// Function to fetch and display toppings
 function fetchToppings() {
     fetch('/toppings')
         .then(response => response.json())
@@ -38,6 +41,7 @@ function fetchToppings() {
         });
 }
 
+// Function to fetch and display pizzas
 function fetchPizzas() {
     fetch('/pizzas')
         .then(response => response.json())
@@ -71,6 +75,7 @@ function fetchPizzas() {
         });
 }
 
+// Function to update pizza toppings checkboxes
 function updatePizzaToppings(toppings) {
     const pizzaToppings = document.getElementById('pizza-toppings');
     pizzaToppings.innerHTML = toppings.map(topping => 
@@ -81,6 +86,7 @@ function updatePizzaToppings(toppings) {
     ).join('');
 }
 
+// Event listener for adding a new topping
 document.getElementById('add-topping-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('topping-name').value;
@@ -95,6 +101,7 @@ document.getElementById('add-topping-form').addEventListener('submit', function(
     });
 });
 
+// Event listener for adding a new pizza
 document.getElementById('add-pizza-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const name = document.getElementById('pizza-name').value;
@@ -111,6 +118,7 @@ document.getElementById('add-pizza-form').addEventListener('submit', function(e)
     });
 });
 
+// Function to delete a topping
 function deleteTopping(id) {
     if (confirm('Are you sure you want to delete this topping?')) {
         fetch(`/toppings/${id}`, {method: 'DELETE'})
@@ -118,6 +126,7 @@ function deleteTopping(id) {
     }
 }
 
+// Function to delete a pizza
 function deletePizza(id) {
     if (confirm('Are you sure you want to delete this pizza?')) {
         fetch(`/pizzas/${id}`, {method: 'DELETE'})
@@ -125,6 +134,7 @@ function deletePizza(id) {
     }
 }
 
+// Function to edit a topping
 function editTopping(id, currentName) {
     const newName = prompt('Enter new name for topping:', currentName);
     if (newName) {
@@ -136,6 +146,7 @@ function editTopping(id, currentName) {
     }
 }
 
+// Function to edit a pizza
 function editPizza(id, currentName, currentToppings) {
     const modal = document.getElementById('edit-pizza-modal');
     const form = document.getElementById('edit-pizza-form');
@@ -162,6 +173,7 @@ function editPizza(id, currentName, currentToppings) {
     modal.classList.remove('hidden');
 }
 
+// Event listener for submitting edited pizza
 document.getElementById('edit-pizza-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const id = document.getElementById('edit-pizza-id').value;
@@ -179,9 +191,11 @@ document.getElementById('edit-pizza-form').addEventListener('submit', function(e
     });
 });
 
+// Event listener for closing edit pizza modal
 document.getElementById('close-modal').addEventListener('click', function() {
     document.getElementById('edit-pizza-modal').classList.add('hidden');
 });
 
+// Initial fetch of toppings and pizzas
 fetchToppings();
 fetchPizzas();
