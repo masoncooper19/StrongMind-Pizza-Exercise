@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -8,6 +9,14 @@ app = Flask(__name__, static_url_path='/static')
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+with app.app_context():
+    db.create_all()
+    migrate.init_app(app, db)
+    try:
+        migrate.upgrade()
+    except:
+        db.create_all()  # If migrations fail, try to create tables directly
 
 # Define Topping model
 class Topping(db.Model):
@@ -104,5 +113,6 @@ def update_delete_pizza(pizza_id):
     db.session.commit()
     return jsonify({'message': 'Pizza deleted successfully'})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)

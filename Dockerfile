@@ -1,20 +1,20 @@
-# Use the official Python image
+# Use an official Python runtime as a parent image
 FROM python:3.8-slim
-
-# Set environment variables
-ENV PYTHONUNBUFFERED True
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the dependencies file to the working directory
-COPY requirements.txt .
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Install any dependencies
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the content of the local src directory to the working directory
-COPY . .
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
 
-# Specify the command to run on container start
+# Define environment variable
+ENV PORT 8080
+
+# Run app.py when the container launches
 CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 app:app
