@@ -1,22 +1,19 @@
 import os
+import logging
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Initialize Flask app and configure it
 app = Flask(__name__, static_url_path='/static')
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
-with app.app_context():
-    db.create_all()
-    migrate.init_app(app, db)
-    try:
-        migrate.upgrade()
-    except:
-        db.create_all()  # If migrations fail, try to create tables directly
 
 # Define Topping model
 class Topping(db.Model):
@@ -35,6 +32,13 @@ class Pizza(db.Model):
     name = db.Column(db.String(50), unique=True, nullable=False)
     toppings = db.relationship('Topping', secondary=pizza_toppings, lazy='subquery',
                                backref=db.backref('pizzas', lazy=True))
+
+with app.app_context():
+    try:
+        db.create_all()
+        logger.info("Database tables created successfully")
+    except Exception as e:
+        logger.error(f"Error creating database tables: {str(e)}")
 
 # Route for the main page
 @app.route('/')
